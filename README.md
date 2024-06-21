@@ -117,6 +117,8 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 
 ### Testing the Configuration
 
+**Note:** Make sure to add a host file entry or update DNS to point your_domain.com to the Ubuntu server. 
+
 - **Basic Authentication**:
   - Use the following `curl` command to test:
     ```bash
@@ -159,9 +161,3 @@ The script includes checks to ensure that NGINX configurations are valid before 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-**Note**: Replace `your_domain.com` with your actual domain name when prompted by the script or when using the `curl` commands.
-
----
-
-
