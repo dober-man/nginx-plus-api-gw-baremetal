@@ -62,97 +62,143 @@ nginx version: nginx/1.25.5 (nginx-plus-r32)
 
 This script sets up cryptographic components and configures NGINX as a Gateway for the Cats API. The user can choose between Basic Authentication and Mutual TLS (mTLS) for secure access. The script also provides an option to add other authentication methods if needed.
 
+# Setup Script for NGINX Gateway with Authentication for Cats API
+
+This Bash script sets up cryptographic configurations and configures NGINX as an API Gateway for the Cats API. It allows the user to select between Basic Authentication and Mutual TLS (mTLS) authentication.
+
 ## Prerequisites
 
-- `openssl` must be installed on your system for generating certificates.
-- `nginx` must be installed and running.
-- `apache2-utils` must be installed to use Basic Authentication.
+- A Unix-based operating system (e.g., Ubuntu).
+- NGINX installed and running.
+- OpenSSL installed for cryptographic operations.
+- Apache utilities installed for Basic Authentication (if chosen).
 
-## Script Workflow
+## Features
 
-1. **Create Certificate Directory**: The script creates a directory for storing SSL certificates at `/etc/nginx/ssl`.
+- **Certificate Management**: Creates directories and generates private keys and self-signed certificates.
+- **Basic Authentication**: Option to secure the API using HTTP Basic Authentication.
+- **Mutual TLS (mTLS)**: Option to secure the API using mTLS, which requires client certificates.
+- **Configuration Backup**: Backups existing NGINX configuration before making changes.
+- **Dynamic NGINX Configuration**: Configures NGINX based on user-selected authentication type.
 
-2. **Generate Private Key**: Generates a secure private key for the server.
+## Usage
 
-3. **Create Self-Signed Certificate**: Generates a self-signed SSL certificate.
-
-4. **Remove Passphrase from Key**: Removes the passphrase from the private key for easier access by NGINX.
-
-5. **Backup NGINX Configuration**: Backs up the existing NGINX configuration file to avoid any data loss.
-
-6. **Choose Authentication Type**: Prompts the user to select either Basic Authentication or mTLS.
-
-7. **Install Apache Utils**: Installs Apache utilities if necessary, for creating a `.htpasswd` file if Basic Authentication is chosen.
-
-8. **Create `.htpasswd` File**: Creates a `.htpasswd` file for Basic Authentication.
-
-9. **Generate Client Certificate for mTLS**: Generates a client certificate for mTLS and sets appropriate permissions.
-
-10. **Configure NGINX**: Configures NGINX based on the chosen authentication method.
-
-11. **Test NGINX Configuration**: Tests the NGINX configuration for errors.
-
-12. **Restart NGINX**: Restarts the NGINX service to apply the new configuration.
-
-## Usage Instructions
-
-### Running the Script
-
-1. Make the script executable:
+1. **Run the Script**:
     ```bash
-    chmod +x setup_nginx_gw.sh
+    ./setup_nginx_gateway.sh
     ```
 
-2. Run the script:
+2. **Enter Domain**:
+    - Enter your domain. This should be the FQDN that resolves to the host where NGINX is running.
+    - Default: `your_domain.com`.
+
+3. **Choose Authentication Type**:
+    - Options: Basic Authentication (`a`) or mTLS Authentication (`b`).
+    - Other methods like OAuth, OIDC, and LDAP can be added.
+
+4. **Configure Upstream Server**:
+    - Enter the upstream server address that NGINX will forward requests to.
+    - Default: `api.thecatapi.com`.
+
+## Script Breakdown
+
+1. **Create Certificate Directory**:
     ```bash
-    sudo ./setup_nginx_gw.sh
+    sudo mkdir -p /etc/nginx/ssl
     ```
 
-### Choosing an Authentication Type
+2. **Generate Private Key**:
+    ```bash
+    sudo openssl genpkey -algorithm RSA -out /etc/nginx/ssl/nginx-selfsigned.key -aes256
+    ```
+
+3. **Create Self-Signed Certificate**:
+    ```bash
+    sudo openssl req -new -x509 -key /etc/nginx/ssl/nginx-selfsigned.key -out /etc/nginx/ssl/nginx-selfsigned.crt -days 365 -subj "/C=US/ST=New York/L=New York/O=Example Company/OU=Org/CN=$domain"
+    ```
+
+4. **Remove Key Passphrase**:
+    ```bash
+    sudo openssl rsa -in /etc/nginx/ssl/nginx-selfsigned.key -out /etc/nginx/ssl/nginx-selfsigned-nopass.key
+    ```
+
+5. **Backup Existing NGINX Configuration**:
+    ```bash
+    sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup
+    ```
+
+6. **Install Apache Utilities** (for Basic Auth):
+    ```bash
+    sudo apt-get install -y apache2-utils
+    ```
+
+7. **Create `.htpasswd` File** (for Basic Auth):
+    ```bash
+    sudo htpasswd -c /etc/nginx/.htpasswd <username>
+    ```
+
+8. **Generate Client Certificate** (for mTLS):
+    ```bash
+    sudo openssl req -newkey rsa:2048 -nodes -keyout /etc/nginx/ssl/client.key -out /etc/nginx/ssl/client.csr -subj "/C=US/ST=New York/L=New York/O=Client Company/OU=Org/CN=client"
+    sudo openssl x509 -req -in /etc/nginx/ssl/client.csr -CA /etc/nginx/ssl/nginx-selfsigned.crt -CAkey /etc/nginx/ssl/nginx-selfsigned-nopass.key -CAcreateserial -out /etc/nginx/ssl/client.crt -days 365
+    sudo openssl pkcs12 -export -out /etc/nginx/ssl/client.pfx -inkey /etc/nginx/ssl/client.key -in /etc/nginx/ssl/client.crt -certfile /etc/nginx/ssl/nginx-selfsigned.crt -password pass:your_password
+    ```
+
+9. **Set Permissions**:
+    ```bash
+    sudo chmod 644 /etc/nginx/ssl/client.crt
+    sudo chmod 600 /etc/nginx/ssl/client.key
+    sudo chown $(whoami):$(whoami) /etc/nginx/ssl/client.crt
+    sudo chown $(whoami):$(whoami) /etc/nginx/ssl/client.key
+    ```
+
+10. **Configure NGINX**:
+    ```bash
+    sudo tee /etc/nginx/nginx.conf <<EOF
+    # NGINX Configuration
+    EOF
+    ```
+
+11. **Test NGINX Configuration**:
+    ```bash
+    sudo nginx -t
+    ```
+
+12. **Restart NGINX**:
+    ```bash
+    sudo systemctl restart nginx
+    ```
+
+## Testing
 
 - **Basic Authentication**:
-  - The script will prompt you to enter a username for creating a `.htpasswd` file.
-  - You will be asked for your domain, which is used for the NGINX server configuration.
-
-- **Mutual TLS (mTLS) Authentication**:
-  - The script will generate a client certificate and set the necessary permissions.
-  - You will be prompted to enter your domain.
-
-### Testing the Configuration
-
-**Note:** Make sure to add a host file entry or update DNS to point your_domain.com to the Ubuntu server. 
-
-- **Basic Authentication**:
-  - Use the following `curl` command to test:
     ```bash
-    curl -k https://your_domain.com -u 'user:password'
+    curl -k https://$domain -u 'user:password'
     ```
 
-- **Mutual TLS**:
-  - Use the following `curl` command to test:
+- **mTLS Authentication**:
     ```bash
-    curl -k --cert /etc/nginx/ssl/client.crt --key /etc/nginx/ssl/client.key https://your_domain.com
+    curl -k --cert /etc/nginx/ssl/client.crt --key /etc/nginx/ssl/client.key https://$domain
     ```
 
-## Script Details
+## Notes
 
-### Certificate Generation
+- Ensure that NGINX is correctly installed and that you have administrative privileges to run the script.
+- The script assumes default installation paths and configurations for NGINX and OpenSSL. Adjust paths if your setup is different.
+- Modify the script to add support for additional authentication methods as required.
 
-The script generates an RSA private key and a self-signed certificate with a validity of 365 days. The certificate's subject details (such as country, state, and organization) are pre-configured but can be adjusted in the script.
+## License
 
-### NGINX Configuration
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-The script configures NGINX to use the generated SSL certificates and sets up the server to forward requests to the Cats API. It includes configurations for both Basic Authentication and mTLS, and prompts the user to choose between them.
+## Author
 
-### Error Handling
+- **Your Name**
 
-The script includes checks to ensure that NGINX configurations are valid before restarting the service. It also provides feedback on the success or failure of the operations.
+---
 
-## Troubleshooting
+Feel free to modify and extend this script to suit your specific needs. Contributions and suggestions are welcome!
 
-- Ensure that you have the necessary permissions to execute the script and make changes to the `/etc/nginx` directory.
-- Check for typos or incorrect domain entries during the prompts.
-- Review the NGINX test output for any configuration errors if the script reports issues.
 
 ## Future Enhancements
 
