@@ -87,7 +87,7 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 
 ## Usage
 
-1. **Download the Script**: Save the `setup_nginx_gateway.sh` script to the system you will be installing N+ and NAP on.
+1. **Download the Script**: Save the `setup_nginx_gateway.sh` script to the system you will already installed N+ and NAP on.
 
 2. **Make the Script Executable**:
     ```bash
