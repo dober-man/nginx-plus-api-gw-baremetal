@@ -71,10 +71,6 @@ nginx version: nginx/1.25.5 (nginx-plus-r32)
 
 This script sets up cryptographic components and configures NGINX as a Gateway for an API. The user can choose between Basic Authentication and Mutual TLS (mTLS) for secure access. The script also provides an option to add other authentication methods if needed.
 
-# Setup Script for NGINX Gateway with Authentication - User defined API
-
-This Bash script sets up cryptographic configurations and configures NGINX as an API Gateway for an API. It allows the user to select between Basic Authentication and Mutual TLS (mTLS) authentication.
-
 ## Prerequisites
 
 - A Unix-based operating system (e.g., Ubuntu).
