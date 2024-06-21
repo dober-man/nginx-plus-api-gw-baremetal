@@ -60,11 +60,11 @@ nginx version: nginx/1.25.5 (nginx-plus-r32)
 
 ## Overview
 
-This script sets up cryptographic components and configures NGINX as a Gateway for the Cats API. The user can choose between Basic Authentication and Mutual TLS (mTLS) for secure access. The script also provides an option to add other authentication methods if needed.
+This script sets up cryptographic components and configures NGINX as a Gateway for an API. The user can choose between Basic Authentication and Mutual TLS (mTLS) for secure access. The script also provides an option to add other authentication methods if needed.
 
-# Setup Script for NGINX Gateway with Authentication for Cats API
+# Setup Script for NGINX Gateway with Authentication - User defined API
 
-This Bash script sets up cryptographic configurations and configures NGINX as an API Gateway for the Cats API. It allows the user to select between Basic Authentication and Mutual TLS (mTLS) authentication.
+This Bash script sets up cryptographic configurations and configures NGINX as an API Gateway for an API. It allows the user to select between Basic Authentication and Mutual TLS (mTLS) authentication.
 
 ## Prerequisites
 
@@ -187,20 +187,7 @@ This Bash script sets up cryptographic configurations and configures NGINX as an
 - The script assumes default installation paths and configurations for NGINX and OpenSSL. Adjust paths if your setup is different.
 - Modify the script to add support for additional authentication methods as required.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author
-
-- **Your Name**
-
----
-
-Feel free to modify and extend this script to suit your specific needs. Contributions and suggestions are welcome!
-
-
-## Future Enhancements
+- ## Future Enhancements
 
 - The script can be extended to include additional authentication methods such as OAuth, OIDC, LDAP, or custom methods.
 - More detailed logging and error handling can be added to improve usability and troubleshooting.
@@ -208,5 +195,14 @@ Feel free to modify and extend this script to suit your specific needs. Contribu
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+- **Brad Scherer**
+
+---
+
+Feel free to modify and extend this script to suit your specific needs. Contributions and suggestions are welcome!
+
 
 ---
