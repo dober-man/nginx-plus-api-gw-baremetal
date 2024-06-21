@@ -82,7 +82,7 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 
 6. **Choose Authentication Type**: Prompts the user to select either Basic Authentication or mTLS.
 
-7. **Install Apache Utils**: Installs Apache utilities for creating a `.htpasswd` file if Basic Authentication is chosen.
+7. **Install Apache Utils**: Installs Apache utilities if necessary, for creating a `.htpasswd` file if Basic Authentication is chosen.
 
 8. **Create `.htpasswd` File**: Creates a `.htpasswd` file for Basic Authentication.
 
