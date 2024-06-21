@@ -73,7 +73,6 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 
 ## Prerequisites
 
-- A Unix-based operating system (e.g., Ubuntu).
 - NGINX installed and running.
 - OpenSSL installed for cryptographic operations.
 - Apache utilities installed for Basic Authentication (if chosen).
