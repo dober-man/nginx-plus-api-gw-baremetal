@@ -11,7 +11,7 @@
      *Allow List
  - NGINX+ App Protect (Bot & WAF Policy)
   
-**************************************SECTION 1*********************************************************************
+-----------------------------------------**SECTION 1**-----------------------------------------
 
 # NGINX+ App Protect Installation Script
 
@@ -63,8 +63,7 @@ Assuming your certificate and key files are located in `/home/user/`, you would 
 NGINX+ installation verification:
 nginx version: nginx/1.25.5 (nginx-plus-r32)
 
-**************************************SECTION 2*********************************************************************
-
+-----------------------------------------**SECTION 2**-----------------------------------------
 
 # NGINX+ API GW basic config with Auth (basic or mTLS)
 
@@ -203,7 +202,7 @@ This Bash script sets up cryptographic configurations and configures NGINX as an
 - More detailed logging and error handling can be added to improve usability and troubleshooting.
 
 
-**************************************SECTION 3*********************************************************************
+-----------------------------------------**SECTION 3**-----------------------------------------
 
 # Adding features to the API Gateway
 
@@ -453,8 +452,7 @@ To verify that the IP allow list configuration is working:
 
 This guide will help you set up and test an IP allow list for your API using NGINX. Adjust the IP ranges and addresses to match your specific security requirements.
 
-**************************************SECTION 4*********************************************************************
-
+-----------------------------------------**SECTION 4**-----------------------------------------
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
