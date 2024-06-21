@@ -51,7 +51,10 @@ Assuming your certificate and key files are located in `/home/user/`, you would 
 ```bash
 ./setup_nginx.py /home/user/nginx-repo.crt /home/user/nginx-repo.key
 ```
+### Successful Completion
 
+NGINX+ installation verification:
+nginx version: nginx/1.25.5 (nginx-plus-r32)
 
 # NGINX+ API GW basic config with Auth (basic or mTLS)
 
