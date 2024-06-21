@@ -192,6 +192,76 @@ This Bash script sets up cryptographic configurations and configures NGINX as an
 - The script can be extended to include additional authentication methods such as OAuth, OIDC, LDAP, or custom methods.
 - More detailed logging and error handling can be added to improve usability and troubleshooting.
 
+# Adding features to the API Gateway
+
+# NGINX Load Balancing for Cats API
+
+This section provides instructions for configuring NGINX to load balance traffic for the Cats API and how to test the configuration.
+
+## Adding Load Balancing
+
+To distribute traffic across multiple backend servers, you can configure NGINX with an upstream block. Follow these steps:
+
+1. **Edit your NGINX configuration file** (e.g., `/etc/nginx/nginx.conf` or a specific site configuration file under `/etc/nginx/sites-available/`).
+
+2. **Add the upstream block** to define the backend servers:
+    ```nginx
+    http {
+        upstream catapi {
+            server api.thecatapi.com;
+            server api2.thecatapi.com;
+        }
+        
+        server {
+            listen 443 ssl;
+            server_name your_domain.com;
+
+            ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+            ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned-nopass.key;
+
+            location / {
+                proxy_pass https://catapi;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+        }
+    }
+    ```
+
+3. **Save and close the configuration file**.
+
+4. **Test the NGINX configuration** to ensure there are no syntax errors:
+    ```bash
+    sudo nginx -t
+    ```
+
+5. **Reload or restart NGINX** to apply the changes:
+    ```bash
+    sudo systemctl reload nginx
+    ```
+
+## Testing Load Balancing
+
+To verify that the load balancing configuration is working:
+
+1. **Send multiple requests** to your NGINX server using a tool like `curl`:
+    ```bash
+    curl -k https://your_domain.com -o /dev/null -s -w "%{http_code}\n"
+    ```
+
+2. **Observe the backend servers** to check if the requests are distributed. You can use server logs or monitoring tools to verify that traffic is reaching all specified servers.
+
+3. **Check NGINX logs** for any issues or confirmations that requests are being handled properly:
+    ```bash
+    sudo tail -f /var/log/nginx/access.log
+    sudo tail -f /var/log/nginx/error.log
+    ```
+
+This guide will help you set up and test load balancing for your Cats API using NGINX. Adjust the configuration as necessary to suit your specific requirements.
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
