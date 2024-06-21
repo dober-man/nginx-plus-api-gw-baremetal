@@ -52,9 +52,8 @@ Assuming your certificate and key files are located in `/home/user/`, you would 
 ./setup_nginx.py /home/user/nginx-repo.crt /home/user/nginx-repo.key
 ```
 
-# NGINX+ API GW basic config with Auth (basic or mTLS)
 
-# NGINX Gateway Setup Script for Cats API
+# NGINX+ API GW basic config with Auth (basic or mTLS)
 
 ## Overview
 
