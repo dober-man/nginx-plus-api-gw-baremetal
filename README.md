@@ -3,7 +3,7 @@
 ## There are 3 sections to this guide. 
 
 - NGINX+ App Protect Installation Script
-- NGINX+ API GW basic config with Auth (basic or mTLS)
+- NGINX+ API GW config with Auth Script (basic or mTLS)
 - NGINX+ API GW features - additional config examples
 
 # NGINX+ App Protect Installation Script
