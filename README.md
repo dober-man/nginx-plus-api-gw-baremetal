@@ -87,20 +87,26 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 
 ## Usage
 
-1. **Run the Script**:
+1. **Download the Script**: Save the `setup_nginx.py` script to the system you will be installing N+ and NAP on.
+
+2. **Make the Script Executable**:
+    ```bash
+    chmod +x setup_nginx.py
+
+3. **Run the Script**:
     ```bash
     ./setup_nginx_gateway.sh
     ```
 
-2. **Enter Domain**:
+4. **Enter Domain**:
     - Enter your domain. This should be the FQDN that resolves to the host where NGINX is running.
     - Default: `your_domain.com`.
 
-3. **Choose Authentication Type**:
+5. **Choose Authentication Type**:
     - Options: Basic Authentication (`a`) or mTLS Authentication (`b`).
     - Other methods like OAuth, OIDC, and LDAP can be added.
 
-4. **Configure Upstream Server**:
+6. **Configure Upstream Server**:
     - Enter the upstream server address that NGINX will forward requests to.
     - Default: `api.thecatapi.com`.
 
