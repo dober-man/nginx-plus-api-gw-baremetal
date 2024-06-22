@@ -207,7 +207,7 @@ if [[ $auth_choice == "b" ]]; then
     echo "  curl -k --cert /etc/nginx/ssl/client.crt --key /etc/nginx/ssl/client.key https://$domain"
 else
     echo "To test the site with Basic Authentication, use the following curl command:"
-    echo "  curl -k https://$domain -u 'user1:password'"
+    echo "  curl -k https://$domain -u 'user:password'"
 fi
 
 echo "Done."
