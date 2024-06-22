@@ -197,7 +197,7 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 - Ensure that NGINX is correctly installed and that you have administrative privileges to run the script.
 - The script assumes default installation paths and configurations for NGINX and OpenSSL. Adjust paths if your setup is different.
 
-- ## Future Enhancements
+## Future Enhancements
 
 - The script can be extended to include additional authentication methods such as OAuth, OIDC, LDAP, or custom methods.
 - More detailed logging and error handling can be added to improve usability and troubleshooting.
