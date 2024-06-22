@@ -61,6 +61,7 @@ Assuming your certificate and key files are located in `/home/user/`, you would 
 ### Successful Completion
 
 NGINX+ installation verification:
+
 nginx version: nginx/1.25.5 (nginx-plus-r32)
 
 -----------------------------------------**SECTION 2**-----------------------------------------
