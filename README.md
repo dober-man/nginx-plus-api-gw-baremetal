@@ -261,7 +261,7 @@ To prevent abuse and manage traffic effectively, you can configure NGINX to limi
 
 1. **Edit your NGINX configuration file** (e.g., `/etc/nginx/nginx.conf` or a specific site configuration file under `/etc/nginx/sites-available/`).
 
-2. **Add the rate limiting configuration**:
+2. **Add the rate limiting configuration** (limit_req zone and limit_req lines):
     ```nginx
     http {
         limit_req_zone $binary_remote_addr zone=mylimit:10m rate=5r/s;
