@@ -5,10 +5,10 @@
 1. NGINX+ App Protect (NAP) Installation Script
 2. NGINX+ API GW config with Auth Script (basic or mTLS)
 3. NGINX+ API GW features - additional config examples
-     -Load Balancing
-     -Rate Limiting
-     -Caching
-     -Allow List
+- Load Balancing
+- Rate Limiting
+- Caching
+- Allow List
 4. NGINX+ App Protect (Bot & WAF Policy)
   
 -----------------------------------------**SECTION 1**-----------------------------------------
