@@ -1,6 +1,6 @@
 #!/bin/bash
-#Script sets up crypto and configures NGINX as GW for cats api. User can 
-#select between basic auth and mtls (other options could be added)
+# Script sets up crypto and configures NGINX as GW for cats api. User can 
+# select between basic auth and mtls (other options could be added)
 
 # Function to create a certificate directory
 create_certificate_directory() {
@@ -18,7 +18,7 @@ generate_private_key() {
 create_self_signed_certificate() {
     echo "Creating self-signed certificate..."
     sudo openssl req -new -x509 -key nginx-selfsigned.key -out nginx-selfsigned.crt -days 365 \
-        -subj "/C=US/ST=New York/L=New York/O=Example Company/OU=Org/CN=your_domain.com"
+        -subj "/C=US/ST=New York/L=New York/O=Example Company/OU=Org/CN=$1"
 }
 
 # Function to remove the passphrase from the key
@@ -111,8 +111,8 @@ EOF
         location / {
             auth_basic "Restricted Area";
             auth_basic_user_file /etc/nginx/.htpasswd;
-            proxy_pass https://api.thecatapi.com;
-            proxy_set_header Host api.thecatapi.com;
+            proxy_pass https://$3;
+            proxy_set_header Host $3;
             proxy_set_header X-Real-IP \$remote_addr;
             proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto \$scheme;
@@ -129,8 +129,8 @@ EOF
         ssl_verify_client on;
 
         location / {
-            proxy_pass https://api.thecatapi.com;
-            proxy_set_header Host api.thecatapi.com;
+            proxy_pass https://$3;
+            proxy_set_header Host $3;
             proxy_set_header X-Real-IP \$remote_addr;
             proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto \$scheme;
@@ -166,15 +166,16 @@ restart_nginx() {
 }
 
 # Main script execution
+read -p "Enter your domain - this is the fqdn users connect to. This should resolve to the host where NGINX is running (default: your_domain.com): " domain
+domain=${domain:-your_domain.com}
 create_certificate_directory
 generate_private_key
-create_self_signed_certificate
+create_self_signed_certificate $domain
 remove_passphrase_from_key
 backup_nginx_configuration
 
 echo "Choose an Authentication Type - other methods supported and could be added to this script:"
 echo " Other options could include oAuth, OIDC, LDAP & Custom"
-echo "a. Please Choose"
 echo "a. Basic Authentication"
 echo "b. Mutual TLS (mTLS) Authentication"
 
@@ -194,8 +195,10 @@ else
     exit 1
 fi
 
-read -p "Enter your domain (e.g., your_domain.com): " domain
-configure_nginx $domain $auth_choice
+read -p "Enter the upstream server (default: api.thecatapi.com): " upstream
+upstream=${upstream:-api.thecatapi.com}
+
+configure_nginx $domain $auth_choice $upstream
 test_nginx_configuration
 restart_nginx
 
