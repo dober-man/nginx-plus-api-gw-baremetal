@@ -323,7 +323,7 @@ Caching helps to reduce the load on backend servers and improve response times b
 
 1. **Edit your NGINX configuration file** (e.g., `/etc/nginx/nginx.conf` or a specific site configuration file under `/etc/nginx/sites-available/`).
 
-2. **Add the caching configuration**:
+2. **Add the caching configuration (proxy_cache path, proxy_cache and proxy_cache_valid lines)**:
     ```nginx
     http {
         proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=10g inactive=60m use_temp_path=off;
