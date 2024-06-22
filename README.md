@@ -209,6 +209,7 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 
 This section provides instructions for configuring NGINX to load balance traffic for the API and how to test the configuration.
 You will configure examples for: 
+
      -Load Balancing
      -Rate Limiting
      -Caching
