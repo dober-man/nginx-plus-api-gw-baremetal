@@ -102,7 +102,11 @@ This script sets up cryptographic components and configures NGINX as a Gateway f
 4. **Enter Domain**:
     - Enter your domain. This should be the FQDN that resolves to the host where NGINX is running.
     - Default: `your_domain.com`.
-
+    - Now would be a good time to add this to your host file
+    ```bash
+    echo "10.1.1.5 your_domain.com" | sudo tee -a /etc/hosts
+     ```
+  
 5. **Choose Authentication Type**:
     - Options: Basic Authentication (`a`) or mTLS Authentication (`b`).
     - Other methods like OAuth, OIDC, and LDAP can be added.
