@@ -458,6 +458,7 @@ To verify that the IP allow list configuration is working:
     ```
 
 This guide will help you set up and test an IP allow list for your API using NGINX. Adjust the IP ranges and addresses to match your specific security requirements.
+To optionally add Geolocation Blocking you can visit https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-by-geoip/
 
 -----------------------------------------**SECTION 4**-----------------------------------------
 ## License
