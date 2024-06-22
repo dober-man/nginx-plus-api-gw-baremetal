@@ -2,7 +2,7 @@
 
 ## There are 4 sections to this guide. 
 
-1. NGINX+ App Protect Installation Script
+1. NGINX+ App Protect (NAP) Installation Script
 2. NGINX+ API GW config with Auth Script (basic or mTLS)
 3. NGINX+ API GW features - additional config examples
      -Load Balancing
@@ -17,7 +17,7 @@
 
 ## Overview
 
-This Python script automates the installation and configuration of NGINX+ and NGINX App Protect on an Ubuntu 22.04 system. It sets up the necessary directories, copies the provided certificate and key files, installs required dependencies, and configures the repositories for NGINX+ and App Protect. This script could easily be modified to support a variety of supported host Operating Systems including RHEL, Debian or Alpine. 
+This Python script automates the installation and configuration of NGINX+ and NGINX App Protect (NAP) on an Ubuntu 22.04 system. It sets up the necessary directories, copies the provided certificate and key files, installs required dependencies, and configures the repositories for NGINX+ and App Protect. This script could easily be modified to support a variety of supported host Operating Systems including RHEL, Debian or Alpine. 
 
 ## Prerequisites
 
