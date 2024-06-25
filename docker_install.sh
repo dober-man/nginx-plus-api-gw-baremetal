@@ -6,7 +6,7 @@ latest_compose_release_url="https://github.com/docker/compose/releases/latest"
 echo "Docker Compose Installation Script"
 echo "=================================="
 echo "You can find the latest Docker Compose release version here: $latest_compose_release_url"
-echo "Please enter the Docker Compose version you want to install (e.g., 2.12.2):"
+echo "Please enter the Docker Compose version you want to install - numbers only (e.g., 2.12.2):"
 read -p "Version: " compose_version
 
 if [ -z "$compose_version" ]; then

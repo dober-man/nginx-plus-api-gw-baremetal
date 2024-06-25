@@ -9,7 +9,7 @@
 - Rate Limiting
 - Caching
 - Allow List
-4. NGINX+ App Protect (Bot & WAF Policy)
+4. NGINX+ App Protect Configuration & Testing
   
 -----------------------------------------**SECTION 1**-----------------------------------------
 
@@ -465,6 +465,15 @@ This guide will help you set up and test an IP allow list for your API using NGI
 To optionally add Geolocation Blocking you can visit https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-by-geoip/
 
 -----------------------------------------**SECTION 4**-----------------------------------------
+
+# NGINX+ App Protect Configuration & Testing
+
+## Install Docker & Docker Compose
+
+
+
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
