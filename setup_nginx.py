@@ -279,7 +279,7 @@ with open('docker-compose.yml', 'w') as file:
 import subprocess
 
 try:
-    subprocess.run(["docker-compose", "up", "-d"], check=True)
+    subprocess.run(["sudo", "docker-compose", "up", "-d"], check=True)
     print("Docker Compose ran successfully.")
 except subprocess.CalledProcessError as e:
     print(f"An error occurred while running Docker Compose: {e}")
