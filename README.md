@@ -468,7 +468,11 @@ To optionally add Geolocation Blocking you can visit https://docs.nginx.com/ngin
 
 # NGINX+ App Protect Configuration & Testing
 
-## Install Docker & Docker Compose
+## Verifying Install 
+
+## Default Config
+
+## Custom 
 
 
 
