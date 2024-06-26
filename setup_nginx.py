@@ -236,3 +236,50 @@ run_command(f'chmod +x {docker_script_path}')
 # Execute the Docker installation script
 print("Executing Docker installation script...")
 run_command(f'sudo {docker_script_path}')
+
+# Appending the Docker Compose YAML content
+docker_compose_content = """
+services:
+  waf-enforcer:
+    container_name: waf-enforcer
+    image: private-registry.nginx.com/nap/waf-enforcer:5.2.0
+    environment:
+      - ENFORCER_PORT=50000
+    ports:
+      - "50000:50000"
+    volumes:
+      - /opt/app_protect/bd_config:/opt/app_protect/bd_config
+    networks:
+      - waf_network
+    restart: always
+
+  waf-config-mgr:
+    container_name: waf-config-mgr
+    image: private-registry.nginx.com/nap/waf-config-mgr:5.2.0
+    volumes:
+      - /opt/app_protect/bd_config:/opt/app_protect/bd_config
+      - /opt/app_protect/config:/opt/app_protect/config
+      - /etc/app_protect/conf:/etc/app_protect/conf
+    restart: always
+    network_mode: none
+    depends_on:
+      waf-enforcer:
+        condition: service_started
+
+networks:
+  waf_network:
+    driver: bridge
+"""
+
+# Write Docker Compose content to docker-compose.yml
+with open('docker-compose.yml', 'w') as file:
+    file.write(docker_compose_content)
+
+# Run Docker Compose
+import subprocess
+
+try:
+    subprocess.run(["docker-compose", "up", "-d"], check=True)
+    print("Docker Compose ran successfully.")
+except subprocess.CalledProcessError as e:
+    print(f"An error occurred while running Docker Compose: {e}")
