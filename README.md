@@ -2,14 +2,14 @@
 
 ## There are 4 sections to this guide. 
 
-1. NGINX+ App Protect (NAP) Installation Script
+1. NGINX+ App Protect V5 (NAP) Installation Script
 2. NGINX+ API GW config with Auth Script (basic or mTLS)
 3. NGINX+ API GW features - additional config examples
 - Load Balancing
 - Rate Limiting
 - Caching
 - Allow List
-4. NGINX+ App Protect Configuration & Testing
+4. NGINX+ App Protect V5 Configuration & Testing
   
 -----------------------------------------**SECTION 1**-----------------------------------------
 
