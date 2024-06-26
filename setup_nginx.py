@@ -46,6 +46,13 @@ run_command('sudo rm -f /etc/apt/sources.list.d/nginx*.list')
 run_command('sudo rm -f /etc/apt/sources.list.d/*app-protect*.list')
 run_command('sudo rm -f /etc/apt/apt.conf.d/90pkgs-nginx')
 
+# Remove App Armor (conflicts with app protect install)
+print("Removing & Disabling App Armor")
+run_command('sudo aa-teardown')
+run_command('sudo systemctl stop apparmor')
+run_command('sudo systemctl disable apparmor')
+print("App Armor Disabled...")
+
 # Install prerequisite packages
 print("Installing prerequisite packages")
 run_command('sudo apt-get update && sudo apt-get install -y apt-transport-https lsb-release ca-certificates gnupg2 ubuntu-keyring curl')
