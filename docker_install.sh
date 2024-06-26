@@ -18,6 +18,11 @@ fi
 echo "Updating the system..."
 sudo apt update && sudo apt upgrade -y
 
+# Copying certs for NGINX private registry
+sudo mkdir -p /etc/docker/certs.d/private-registry.nginx.com
+sudo cp nginx-repo.crt /etc/docker/certs.d/private-registry.nginx.com/client.cert
+sudo cp nginx-repo.key /etc/docker/certs.d/private-registry.nginx.com/client.key
+
 # Uninstall old versions of Docker
 echo "Removing old Docker versions..."
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
