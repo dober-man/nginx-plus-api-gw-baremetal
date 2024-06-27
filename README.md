@@ -469,8 +469,64 @@ To optionally add Geolocation Blocking you can visit https://docs.nginx.com/ngin
 # NGINX+ App Protect Configuration & Testing
 
 ## Verifying Install 
+dpkg -l | grep app-protect
+sudo docker ps
 
-## Default Config
+ ## Default Config
+To enable an app protect waf policy, 
+
+## Install Compiler
+Necessary for log profiles to work correctly
+
+# Dockerfile
+
+create/run dockerfile from this repo (adjust image tags in docker file and in below command to build the waf-compiler)
+
+sudo docker build --no-cache \
+--secret id=nginx-crt,src=nginx-repo.crt \
+--secret id=nginx-key,src=nginx-repo.key \
+-t waf-compiler-<version-tag>:custom .
+
+# Get available image tags
+curl -s https://private-registry.nginx.com/v2/nap/waf-compiler/tags/list --key nginx-repo.key --cert nginx-repo.crt |jq 
+
+
+### Load the NGINX App Protect WAF v5 module at the main context:
+
+load_module modules/ngx_http_app_protect_module.so;
+
+### Configure the Enforcer address at the http context:
+app_protect_enforcer_address 127.0.0.1:50000;
+
+### Enable NGINX App Protect WAF on an http/server/location context (make sure you only enable NGINX App Protect WAF with proxy_pass/grpc_pass locations):
+
+app_protect_enable on;
+
+# Had to create log_default.json  (might not be necessary if compiler is installed)
+cat /etc/app_protect/conf/log_default.json
+{
+    "filter": {
+        "request_type": "all"
+    },
+    "content": {
+        "format": "default",
+        "format_string": "client_ip=%ip_client%,client_port=%src_port%,request=%request%,violations=%violations%,signature_ids=%sig_ids%",
+        "max_request_size": "2k",
+        "max_message_size": "5k"
+    }
+}
+
+
+
+
+# add log statements: 
+app_protect_enable on;
+        app_protect_security_log_enable on;
+        app_protect_security_log "/etc/app_protect/conf/log_default.json" stderr;
+        app_protect_security_log log_all /var/log/app_protect/security.log;
+
+
+
 
 ## Custom 
 
