@@ -466,7 +466,7 @@ To optionally add Geolocation Blocking you can visit https://docs.nginx.com/ngin
 
 -----------------------------------------**SECTION 4**-----------------------------------------
 
-# NGINX+ App Protect Configuration & Testing
+# NGINX+ App Protect Configuration & Testing (INCOMPLETE)
 
 ## Verifying Install 
 dpkg -l | grep app-protect
